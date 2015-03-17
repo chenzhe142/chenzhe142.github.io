@@ -35,8 +35,18 @@
 
       <div class="jumbotron" id="Introduction">
         <h2>Introduction</h2>
-        <p>AutoTuner is a program that can tune human voice to sing a simple melody. It is built in MATLAB.</p>
-        <p></p>
+        <p>
+          AutoTuner is a program that can tune human voice to sing a simple melody. It is built in MATLAB.
+        </p>
+        <p>
+          We use following audio processing methods to to achieve this function:
+          <br>
+          - Pitch tracking: analyze input human voice and melody, obtaining their time and frequency information.
+          <br>
+          - Beat tracking: detect onset and match voice with input melody.
+          <br>
+          - Phase vocoder: shift pitch.
+        </p>
       </div>
       
       <div class="jumbotron" id="RelatedWorks">
@@ -54,5 +64,11 @@
     </div>
   	
   </body>
+
+  <footer>
+    <div class="container">
+      <p class="text-center">&copy; 2015 Built by Zhe Chen</p>
+    </div>
+  </footer>
 
 </html>
