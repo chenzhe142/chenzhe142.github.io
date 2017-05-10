@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="React Native," />
+  <meta name="keywords" content="English Posts,React Native," />
 
 
 
@@ -91,7 +91,7 @@
 
 
 <meta name="description" content="Currently, I am building a small notebook app with React-native. While the framework has so much fun to play with, and make my life much better and easier to build cross-platform projects, it does giv">
-<meta name="keywords" content="React Native">
+<meta name="keywords" content="English Posts,React Native">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React native project setup — a better folder structure">
 <meta property="og:url" content="http://yoursite.com/2016/09/15/react-native-folder-structure/index.html">
@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://yoursite.com/2016/09/15/images/folder-structure-2.png">
 <meta property="og:image" content="http://yoursite.com/2016/09/15/images/folder-structure-3.png">
 <meta property="og:image" content="http://yoursite.com/2016/09/15/images/folder-structure-4.png">
-<meta property="og:updated_time" content="2017-05-10T19:34:41.000Z">
+<meta property="og:updated_time" content="2017-05-10T21:22:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React native project setup — a better folder structure">
 <meta name="twitter:description" content="Currently, I am building a small notebook app with React-native. While the framework has so much fun to play with, and make my life much better and easier to build cross-platform projects, it does giv">
@@ -331,8 +331,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Front-end/English-posts/" itemprop="url" rel="index">
-                    <span itemprop="name">English posts</span>
+                  <a href="/categories/Front-end/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -373,6 +373,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/android: Android native code</div><div class="line">/build: stores iOS apk and Android app installation packages</div><div class="line">/ios: iOS native code</div><div class="line">/public: stores images, audios and other assets</div><div class="line">/src: JavaScript source files</div><div class="line">  constants.js: I put all constant variables into this file</div><div class="line">  /components: React-native components, such buttons, lists</div><div class="line">  /scenes</div><div class="line">  /style: shared style files, text, colors, etc.</div><div class="line">  /utils: reusable functions</div><div class="line">index.android.js: Android entry file</div><div class="line">index.ios.js: iOS entry file</div></pre></td></tr></table></figure>
 <h2 id="Here-are-3-steps-that-I-followed-to-re-organize-the-folder"><a href="#Here-are-3-steps-that-I-followed-to-re-organize-the-folder" class="headerlink" title="Here are 3 steps that I followed to re-organize the folder:"></a>Here are 3 steps that I followed to re-organize the folder:</h2><h3 id="1-Move-all-components-into-a-separate-folder"><a href="#1-Move-all-components-into-a-separate-folder" class="headerlink" title="1. Move all components into a separate folder"></a>1. Move all components into a separate folder</h3><p><img src="../images/folder-structure-2.png" alt="folder structure"></p>
 <h3 id="2-Put-style-code-into-a-separate-file"><a href="#2-Put-style-code-into-a-separate-file" class="headerlink" title="2. Put style code into a separate file"></a>2. Put style code into a separate file</h3><p><img src="../images/folder-structure-3.png" alt="folder structure"></p>
+<p>My app uses 4 different styles of text, title, subtitle, paragraphs, data. It would be much more easier to just import the style of text, and use it directly.<br>I put shared text styles in to text.js file:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> text = StyleSheet.create(&#123;</div><div class="line">    <span class="attr">p</span>: &#123;</div><div class="line">      <span class="attr">color</span>: <span class="string">'black'</span>,</div><div class="line">      <span class="attr">fontFamily</span>: <span class="string">'Open Sans'</span>,</div><div class="line">      <span class="attr">fontSize</span>: <span class="number">14</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">      <span class="attr">fontWeight</span>: <span class="string">'bold'</span>,</div><div class="line">      <span class="attr">color</span>: <span class="string">'black'</span>,</div><div class="line">      <span class="attr">fontFamily</span>: <span class="string">'Open Sans'</span>,</div><div class="line">      <span class="attr">fontSize</span>: <span class="number">20</span>,</div><div class="line">    &#125;,    </div><div class="line">    <span class="attr">subTitle</span>: &#123;</div><div class="line">      <span class="attr">fontWeight</span>: <span class="string">'bold'</span>,</div><div class="line">      <span class="attr">color</span>: <span class="string">'black'</span>,</div><div class="line">      <span class="attr">fontFamily</span>: <span class="string">'Open Sans'</span>,</div><div class="line">      <span class="attr">fontSize</span>: <span class="number">14</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">data</span>: &#123;</div><div class="line">      <span class="attr">color</span>: <span class="string">'black'</span>,</div><div class="line">      <span class="attr">fontFamily</span>: <span class="string">'Open Sans'</span>,</div><div class="line">      <span class="attr">fontSize</span>: <span class="number">25</span>,</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">  &#125;);</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> text;</div></pre></td></tr></table></figure>
+<p>When defining React component, you can simply import this text style, and use it directly.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;Text style=&#123;text.p&#125;&gt;settings&lt;/Text&gt;</div></pre></td></tr></table></figure></p>
+<p>Overriding the style is very easy, just like the way we do with CSS inline styles :)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;Text style=&#123;[text.p, &#123;backgroundColor: &apos;red&apos;]&#125;&gt;settings&lt;/Text&gt;</div></pre></td></tr></table></figure></p>
+<p>The idea of separating style code by fundamental components is inspired by Atomic Design. It believes small atoms build up big elements.</p>
+<p>I think the idea is very similar to the concept of React-Native, focusing on building components. So I tried it out in this way, so far so good!</p>
 <h3 id="3-Move-shared-functions-into-a-separate-folder"><a href="#3-Move-shared-functions-into-a-separate-folder" class="headerlink" title="3. Move shared functions into a separate folder"></a>3. Move shared functions into a separate folder</h3><p><img src="../images/folder-structure-4.png" alt="folder structure"></p>
 <p>This idea is came from Airbnb’s open source library, react-dates. Originally, I was checking its source code, and get some ideas on my editor linting config. But soon I realized that the way Airbnb organizes source files was amazing and elegant.</p>
 <p>This makes my code easy to maintain, but also much more easier to access in different components. If the code is much more easy to maintain than before, I am sure the development process would be more smooth, and so as my productivity.</p>
@@ -409,6 +415,8 @@
       
         <div class="post-tags">
           
+            <a href="/tags/English-Posts/" rel="tag"># English Posts</a>
+          
             <a href="/tags/React-Native/" rel="tag"># React Native</a>
           
         </div>
@@ -418,6 +426,22 @@
         
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/10/react-minimize/" rel="prev" title="Tricks to minimize React.js build file size">
+                Tricks to minimize React.js build file size <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -486,7 +510,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -497,7 +521,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -508,7 +532,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
