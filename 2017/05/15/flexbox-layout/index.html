@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Zhe Chen, Front End, Blog" />
+  <meta name="keywords" content="CSS," />
 
 
 
@@ -90,15 +90,21 @@
 
 
 
-<meta name="description" content="🇨🇳 software engineer in Seattle. Coding &amp; writing with JavaScript, HTML, CSS and ❤️">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhe Chen">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="最近面试了几家美帝大公司的front end职位。在这几次面试中，几乎每次面试的css题目中都有涉及到flexbox的layout。可以看出，flexbox在工业界的使用还是很广泛的。（我几乎没有被问到关于float的问题） 这篇文章会总结flexbox的常用技巧，以及适用场景。未来会添加grid system的信息和内容。 本文的实例参考自css grid vs flexbox 两个例子用于整个">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Flexbox实现整个页面的layout">
+<meta property="og:url" content="http://yoursite.com/2017/05/15/flexbox-layout/index.html">
 <meta property="og:site_name" content="Zhe Chen">
-<meta property="og:description" content="🇨🇳 software engineer in Seattle. Coding &amp; writing with JavaScript, HTML, CSS and ❤️">
+<meta property="og:description" content="最近面试了几家美帝大公司的front end职位。在这几次面试中，几乎每次面试的css题目中都有涉及到flexbox的layout。可以看出，flexbox在工业界的使用还是很广泛的。（我几乎没有被问到关于float的问题） 这篇文章会总结flexbox的常用技巧，以及适用场景。未来会添加grid system的信息和内容。 本文的实例参考自css grid vs flexbox 两个例子用于整个">
+<meta property="og:image" content="http://yoursite.com/2017/05/15/flexbox-layout/flexbox-layout-1.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/15/flexbox-layout/flexbox-layout-2.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/15/flexbox-layout/flexbox-layout-3.png">
+<meta property="og:updated_time" content="2017-05-16T06:04:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zhe Chen">
-<meta name="twitter:description" content="🇨🇳 software engineer in Seattle. Coding &amp; writing with JavaScript, HTML, CSS and ❤️">
+<meta name="twitter:title" content="用Flexbox实现整个页面的layout">
+<meta name="twitter:description" content="最近面试了几家美帝大公司的front end职位。在这几次面试中，几乎每次面试的css题目中都有涉及到flexbox的layout。可以看出，flexbox在工业界的使用还是很广泛的。（我几乎没有被问到关于float的问题） 这篇文章会总结flexbox的常用技巧，以及适用场景。未来会添加grid system的信息和内容。 本文的实例参考自css grid vs flexbox 两个例子用于整个">
+<meta name="twitter:image" content="http://yoursite.com/2017/05/15/flexbox-layout/flexbox-layout-1.png">
 
 
 
@@ -126,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/15/flexbox-layout/"/>
 
 
 
 
 
-  <title>Zhe Chen</title>
+  <title>用Flexbox实现整个页面的layout | Zhe Chen</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -157,9 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,9 +256,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -280,9 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/15/flexbox-layout/" itemprop="url">用Flexbox实现整个页面的layout</a></h1>
+          <h1 class="post-title" itemprop="name headline">用Flexbox实现整个页面的layout</h1>
         
 
         <div class="post-meta">
@@ -362,9 +364,7 @@
       
 
       
-        
-          
-            <p>最近面试了几家美帝大公司的front end职位。在这几次面试中，几乎每次面试的css题目中都有涉及到flexbox的layout。可以看出，flexbox在工业界的使用还是很广泛的。（我几乎没有被问到关于float的问题）</p>
+        <p>最近面试了几家美帝大公司的front end职位。在这几次面试中，几乎每次面试的css题目中都有涉及到flexbox的layout。可以看出，flexbox在工业界的使用还是很广泛的。（我几乎没有被问到关于float的问题）</p>
 <p>这篇文章会总结flexbox的常用技巧，以及适用场景。未来会添加grid system的信息和内容。</p>
 <p>本文的实例参考自<a href="http://tutorialzine.com/2017/03/css-grid-vs-flexbox/" target="_blank" rel="external">css grid vs flexbox</a></p>
 <h1 id="两个例子"><a href="#两个例子" class="headerlink" title="两个例子"></a>两个例子</h1><h2 id="用于整个页面的layout"><a href="#用于整个页面的layout" class="headerlink" title="用于整个页面的layout"></a>用于整个页面的layout</h2><p>假设我们有如下的page design:</p>
@@ -397,375 +397,72 @@
 <li><a href="http://tutorialzine.com/2017/03/css-grid-vs-flexbox/" target="_blank" rel="external">css grid vs flexbox</a></li>
 </ol>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <div>
+      
+        
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/10/react-minimize/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhe Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhe Chen">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/10/react-minimize/" itemprop="url">Tricks to minimize React.js build file size</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-10T14:30:10-07:00">
-                2016-10-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Front-end/" itemprop="url" rel="index">
-                    <span itemprop="name">Front end</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Front-end/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          
-            <p>When using React.js in my personal projects, I found out that when the project grows bigger and bigger, the final build file gets bigger and bigger as well.</p>
-<p>The build JavaScript file easily goes above 1MB, even though I only have less than 10 React components.</p>
-<img src="/2016/10/10/react-minimize/react-minimize-1.png" alt="React generated build size" title="React generated build size">
-<p>With this huge file size, the page spends 4 seconds to download JavaScript and CSS files, and total 7 seconds for initial page rendering.<br>This is definitely not good.</p>
-<p>Not good for page performance, neither for user experience.</p>
-<p>So, how can I minimize the file size?</p>
-<p>I spent some time looking around all possible solutions, and here are some efficient tricks that can solve the problem.</p>
-<h2 id="Tricks"><a href="#Tricks" class="headerlink" title="Tricks"></a>Tricks</h2><h3 id="minify-front-end-code"><a href="#minify-front-end-code" class="headerlink" title="minify front end code"></a>minify front end code</h3><p>This is the most commonly used method when we want to minimize front end file size. If using Webpack as React.js build tool, we can use <code>webpack.optimize.UglifyJsPlugin</code> to minify front-end needed files.</p>
-<h3 id="create-production-env-variable-in-Webpack-config"><a href="#create-production-env-variable-in-Webpack-config" class="headerlink" title="create production env variable in Webpack config"></a>create production env variable in Webpack config</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">new webpack.DefinePlugin(&#123;</div><div class="line">  &apos;process.env&apos;: &#123;</div><div class="line">    &apos;NODE_ENV&apos;: JSON.stringify(&apos;production&apos;)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h3 id="tree-shake"><a href="#tree-shake" class="headerlink" title="tree shake"></a>tree shake</h3><p>According to current stable version (1.13.2), Webpack does not support ES6 tree shaking. But there is one little trick we can use:<br>When setting up babel config, use the following preset:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&quot;babel&quot;: &#123;</div><div class="line">  &quot;presets&quot;: [</div><div class="line">    &quot;react&quot;,</div><div class="line">    [</div><div class="line">      &quot;es2015&quot;,</div><div class="line">      &#123;</div><div class="line">       &quot;modules&quot;: false</div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>With Webpack 1.13.2, tree-shaking works like magic. :)</p>
-<h2 id="Before-vs-After"><a href="#Before-vs-After" class="headerlink" title="Before vs. After"></a>Before vs. After</h2><p>Use my personal project as an example. I have 10 React components (most of them are having long definitions and more than 5 functions). CSS is not included in the final bundle.js build file.</p>
-<p>Here is result:</p>
-<ul>
-<li>original file size(with no optimization): 1.35MB</li>
-<li>with tree-shaking: 576kB (-58.3%)</li>
-<li>with tree-shaking + Production env variable: 544 kB (-60.6%)</li>
-<li>plus minify: ~10% of previous step’s file size (544 kB)</li>
-</ul>
-<p>If using these 3 tricks together, the final size of bundle.js would be ~500kB, only 36.2% of its original size.</p>
-<p>These 3 tricks are definitely powerful, and easy to use!</p>
-<h2 id="Future-Webpack-2-0"><a href="#Future-Webpack-2-0" class="headerlink" title="Future: Webpack 2.0"></a>Future: Webpack 2.0</h2><p>I am excited to see Webpack 2 support ES6 tree shaking, and simpler way setting up Node.js production flag in Webpack config.</p>
-<p>Currently Webpack is beta-testing v2.1 version. I am trying out different new features. It’s awesome to see Webpack is getting better and better!</p>
-<h2 id="What’s-your-trick"><a href="#What’s-your-trick" class="headerlink" title="What’s your trick?"></a>What’s your trick?</h2><p>I would like to know what’s your trick when optimizing React.js performance. Leave a comment and let’s discuss!</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/15/react-native-folder-structure/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhe Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhe Chen">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/15/react-native-folder-structure/" itemprop="url">React native project setup — a better folder structure</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-15T06:40:12-07:00">
-                2016-09-15
-              </time>
+              <a href="/2016/10/10/react-minimize/" rel="next" title="Tricks to minimize React.js build file size">
+                <i class="fa fa-chevron-left"></i> Tricks to minimize React.js build file size
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Front-end/" itemprop="url" rel="index">
-                    <span itemprop="name">Front end</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Front-end/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Currently, I am building a small notebook app with React-native. While the framework has so much fun to play with, and make my life much better and easier to build cross-platform projects, it does give me some pain, especially when the project grows bigger and bigger.</p>
-<p>My project folder got messy when I started creating new scenes, and global styles. At the very beginning of the development, I kept all style files inside of its React Component class definition file, declaring all styles (font size, color, background color, container flexbox, etc.).</p>
-<p>But as soon as the scenes and components of the app gets more and more complicated (and some of the components were very similar, only have slightly differences, like font size, functions), I realized that I wrote too much duplicated code, copying and pasting them all over the project!</p>
-<p>OK, it’s time to take some effort to clean up the folder , and refactor the code. Keep it DRY.</p>
-<h2 id="Here-is-the-structure-I’m-using-for-my-React-native-project"><a href="#Here-is-the-structure-I’m-using-for-my-React-native-project" class="headerlink" title="Here is the structure I’m using for my React-native project:"></a>Here is the structure I’m using for my React-native project:</h2><img src="/2016/09/15/react-native-folder-structure/folder-structure-1.png" alt="folder structure" title="folder structure">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/android: Android native code</div><div class="line">/build: stores iOS apk and Android app installation packages</div><div class="line">/ios: iOS native code</div><div class="line">/public: stores images, audios and other assets</div><div class="line">/src: JavaScript source files</div><div class="line">  constants.js: I put all constant variables into this file</div><div class="line">  /components: React-native components, such buttons, lists</div><div class="line">  /scenes</div><div class="line">  /style: shared style files, text, colors, etc.</div><div class="line">  /utils: reusable functions</div><div class="line">index.android.js: Android entry file</div><div class="line">index.ios.js: iOS entry file</div></pre></td></tr></table></figure>
-<h2 id="Here-are-3-steps-that-I-followed-to-re-organize-the-folder"><a href="#Here-are-3-steps-that-I-followed-to-re-organize-the-folder" class="headerlink" title="Here are 3 steps that I followed to re-organize the folder:"></a>Here are 3 steps that I followed to re-organize the folder:</h2><h3 id="1-Move-all-components-into-a-separate-folder"><a href="#1-Move-all-components-into-a-separate-folder" class="headerlink" title="1. Move all components into a separate folder"></a>1. Move all components into a separate folder</h3><img src="/2016/09/15/react-native-folder-structure/folder-structure-2.png" alt="folder structure 2" title="folder structure 2">
-<h3 id="2-Put-style-code-into-a-separate-file"><a href="#2-Put-style-code-into-a-separate-file" class="headerlink" title="2. Put style code into a separate file"></a>2. Put style code into a separate file</h3><img src="/2016/09/15/react-native-folder-structure/folder-structure-3.png" alt="folder structure 3" title="folder structure 3">
-<p>My app uses 4 different styles of text, title, subtitle, paragraphs, data. It would be much more easier to just import the style of text, and use it directly.<br>I put shared text styles in to text.js file:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> text = StyleSheet.create(&#123;</div><div class="line">    <span class="attr">p</span>: &#123;</div><div class="line">      <span class="attr">color</span>: <span class="string">'black'</span>,</div><div class="line">      <span class="attr">fontFamily</span>: <span class="string">'Open Sans'</span>,</div><div class="line">      <span class="attr">fontSize</span>: <span class="number">14</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">      <span class="attr">fontWeight</span>: <span class="string">'bold'</span>,</div><div class="line">      <span class="attr">color</span>: <span class="string">'black'</span>,</div><div class="line">      <span class="attr">fontFamily</span>: <span class="string">'Open Sans'</span>,</div><div class="line">      <span class="attr">fontSize</span>: <span class="number">20</span>,</div><div class="line">    &#125;,    </div><div class="line">    <span class="attr">subTitle</span>: &#123;</div><div class="line">      <span class="attr">fontWeight</span>: <span class="string">'bold'</span>,</div><div class="line">      <span class="attr">color</span>: <span class="string">'black'</span>,</div><div class="line">      <span class="attr">fontFamily</span>: <span class="string">'Open Sans'</span>,</div><div class="line">      <span class="attr">fontSize</span>: <span class="number">14</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">data</span>: &#123;</div><div class="line">      <span class="attr">color</span>: <span class="string">'black'</span>,</div><div class="line">      <span class="attr">fontFamily</span>: <span class="string">'Open Sans'</span>,</div><div class="line">      <span class="attr">fontSize</span>: <span class="number">25</span>,</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">  &#125;);</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> text;</div></pre></td></tr></table></figure>
-<p>When defining React component, you can simply import this text style, and use it directly.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;Text style=&#123;text.p&#125;&gt;settings&lt;/Text&gt;</div></pre></td></tr></table></figure></p>
-<p>Overriding the style is very easy, just like the way we do with CSS inline styles :)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;Text style=&#123;[text.p, &#123;backgroundColor: &apos;red&apos;]&#125;&gt;settings&lt;/Text&gt;</div></pre></td></tr></table></figure></p>
-<p>The idea of separating style code by fundamental components is inspired by Atomic Design. It believes small atoms build up big elements.</p>
-<p>I think the idea is very similar to the concept of React-Native, focusing on building components. So I tried it out in this way, so far so good!</p>
-<h3 id="3-Move-shared-functions-into-a-separate-folder"><a href="#3-Move-shared-functions-into-a-separate-folder" class="headerlink" title="3. Move shared functions into a separate folder"></a>3. Move shared functions into a separate folder</h3><img src="/2016/09/15/react-native-folder-structure/folder-structure-4.png" alt="folder structure 4" title="folder structure 4">
-<p>This idea is came from Airbnb’s open source library, react-dates. Originally, I was checking its source code, and get some ideas on my editor linting config. But soon I realized that the way Airbnb organizes source files was amazing and elegant.</p>
-<p>This makes my code easy to maintain, but also much more easier to access in different components. If the code is much more easy to maintain than before, I am sure the development process would be more smooth, and so as my productivity.</p>
-<h2 id="Ending"><a href="#Ending" class="headerlink" title="Ending"></a>Ending</h2><p>This folder structure saves me so many efforts on modifying shared styles! Before organizing the folder into this way, I need to go to each component, find out the specific line for a specific style definition. But now, all I need to do is going straight to the style file, open it, and change it. That’s it!</p>
-<p>Now, developing in React-native truly becomes one of the best tasks in my spare time, and I am more productive and organized.</p>
-<p>Hope this article can give you some ideas and inspirations on gathering your project files.</p>
-<p>Happy coding! 🎉</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -773,6 +470,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -792,8 +493,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -866,6 +576,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#两个例子"><span class="nav-number">1.</span> <span class="nav-text">两个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用于整个页面的layout"><span class="nav-number">1.1.</span> <span class="nav-text">用于整个页面的layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用于某一个小的component的layout"><span class="nav-number">1.2.</span> <span class="nav-text">用于某一个小的component的layout</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接："><span class="nav-number">2.1.</span> <span class="nav-text">参考链接：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -975,6 +701,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
