@@ -263,6 +263,181 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/write-component/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhe Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhe Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/17/write-component/" itemprop="url">设计和编写front end component</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-17T19:26:56-07:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Front-end/" itemprop="url" rel="index">
+                    <span itemprop="name">Front end</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Front-end/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文的结构和理念参考自：<a href="http://web.jobbole.com/87164/" target="_blank" rel="external">http://web.jobbole.com/87164/</a></p>
+<h1 id="文章的初衷"><a href="#文章的初衷" class="headerlink" title="文章的初衷"></a>文章的初衷</h1><p>现在的工作中往往依赖React.js，Backbone.js等等这样的framework来编写component，却对framework内部的逻辑知之甚少。于是在脱离开framework时，几乎难以仅仅使用vanilla JavaScript，HTML和CSS来单独进行开发。</p>
+<p>这篇文章的目的是总结归纳，在不依赖framework时开发component的几个基本的步骤，使自己未来的工作更高效，并且更少地依赖于framework的逻辑，使得自己代码的复用率显著提高，相同地，也促进对framework原理和逻辑的理解。</p>
+<h1 id="为什么要开发component"><a href="#为什么要开发component" class="headerlink" title="为什么要开发component"></a>为什么要开发component</h1><p>原因非常简单：</p>
+<ol>
+<li>提高code maintainability</li>
+<li>提高code reusability</li>
+</ol>
+<p>核心思想：<a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself" target="_blank" rel="external">DRY (don’t repeat your self)</a></p>
+<h1 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h1><h2 id="requirement"><a href="#requirement" class="headerlink" title="requirement"></a>requirement</h2><p>假定我们要实现Facebook news feed card的设计：<br><img src="/2017/05/17/write-component/write-component-1.png" alt="news feed card" title="news feed card"></p>
+<h2 id="breakdown"><a href="#breakdown" class="headerlink" title="breakdown"></a>breakdown</h2><ol>
+<li>Model：存储需要render这个news feed card的data（如发布者，标题，图片链接）以及储存一些前端使用的状态data（例如是否有点赞，是否播放当前视频）</li>
+<li>View：ui，可视部分</li>
+<li>Controller：逻辑处理，例如如何request评论data，如何send request</li>
+</ol>
+<h1 id="方法和步骤"><a href="#方法和步骤" class="headerlink" title="方法和步骤"></a>方法和步骤</h1><h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>Model是储存数据的地方，可以在这里做ajax call，也可以在controller内进行，取决于你的需求。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> getNewsFeedModel = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">title</span>: <span class="string">'news feed title'</span>,</div><div class="line">    <span class="attr">description</span>: <span class="string">'news feed description'</span>,</div><div class="line">    <span class="attr">imgSrc</span>: <span class="string">'http://placehold.it/350x150'</span>,  </div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><p>View的核心是构建一个供component使用的template，这个template可以预先放置于HTML DOM tree中，也可以直接将其写于template function中。</p>
+<p><strong>第一个方法：使用<code>&lt;template&gt;</code> tag</strong><br>See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">id</span>=<span class="string">"news-feed"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"news-feed"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"news-img"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">"news-details"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">article</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>&lt;template&gt;</code> 不同browser的支持状况不同，推荐使用前检查<a href="http://caniuse.com/#feat=template" target="_blank" rel="external">Can I use</a>上的browser支持状况。</p>
+<p>这里有一个小的变种，使用<code>&lt;script type=&quot;text/template&quot;&gt;</code> tag（Backbone在构建Backbone view的template时也使用这样的方法）。</p>
+<p>因浏览器不能识别<code>text/template</code>这个MIME type，因此browser会忽略parse这个tag。借助这个特性，我们可以把template放入<code>&lt;script&gt;</code>tag内，供我们的javascript代码读取。代码示例如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/template"</span> <span class="attr">id</span>=<span class="string">"news-feed"</span>&gt;</span><span class="javascript"></span></div><div class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"news-feed"</span>&gt;</div><div class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"news-img"</span>&gt;</span></span></div><div class="line">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">"news-details"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">article</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在使用<code>&lt;template&gt;</code>tag时，我们只需要选择<code>#news-feed</code>，inject data，并生成和返回一份DOM Node Copy。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> getNewsFeedView = <span class="function"><span class="keyword">function</span>(<span class="params">model</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> template = <span class="built_in">document</span>.querySelector(<span class="string">'#news-feed'</span>);</div><div class="line">  <span class="keyword">const</span> title = template.content.querySelector(<span class="string">'h2'</span>);</div><div class="line">  <span class="keyword">const</span> description = template.content.querySelector(<span class="string">'p'</span>);</div><div class="line">  <span class="keyword">const</span> img = template.content.querySelector(<span class="string">'img'</span>);</div><div class="line"></div><div class="line">  title.text = model.title;</div><div class="line">  description.text = model.description;</div><div class="line">  img.src = model.imgSrc;</div><div class="line"></div><div class="line">  <span class="comment">// see https://developer.mozilla.org/en-US/docs/Web/API/Document/importNode</span></div><div class="line">  <span class="keyword">return</span> <span class="built_in">document</span>.importNode(template.content, <span class="literal">true</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>第二个方法：直接在view-generating function内写入template string</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">cpnst getNewsFeedView = <span class="function"><span class="keyword">function</span>(<span class="params">model</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> template = [</div><div class="line">    <span class="string">'&lt;div class="news-feed"&gt;'</span>,</div><div class="line">      <span class="string">'&lt;div class="news-img"&gt;'</span></div><div class="line">        <span class="string">`&lt;img src="<span class="subst">$&#123;model.imgSrc&#125;</span>"&gt;`</span></div><div class="line">      <span class="string">'&lt;/div&gt;'</span>,</div><div class="line">      <span class="string">'&lt;article class="news-details"&gt;'</span>,</div><div class="line">        <span class="string">'&lt;h2&gt;'</span>,</div><div class="line">          model.title,</div><div class="line">        <span class="string">'&lt;/h2&gt;'</span></div><div class="line">        <span class="string">'&lt;p&gt;'</span>,</div><div class="line">          model.description</div><div class="line">        <span class="string">'&lt;/p&gt;'</span>,</div><div class="line">      <span class="string">'&lt;/article&gt;'</span>,</div><div class="line">    <span class="string">'&lt;/div&gt;'</span></div><div class="line">  ].join(<span class="string">''</span>);</div><div class="line"></div><div class="line">  <span class="keyword">return</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种方法的缺点是代码的可维护性比较差，如果需要修改html markup，需要进行大量的修改，且不够直观。因此，更推荐使用第一种方法。</p>
+<h2 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h2><p>这部分的功能是在各个不同的event和state下，调用View的方法。例如click button to load more news feed。在这里可以attach各个DOM event。</p>
+<h1 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h1><p>经过本文的总结，我们可以发现，脱离开framework进行开发，其实很简单，也很强大。对我来说，最宝贵的一点是加深了对DOM的理解、以及如何高效和有效地剥离开各个部件，进行有效的代码利用。</p>
+<p>阅读完本文后，不妨放下手中的framework，尝试用最简单的工具，从头构建一个component。相信你会受益匪浅。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/15/flexbox-layout/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -808,7 +983,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -830,7 +1005,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
