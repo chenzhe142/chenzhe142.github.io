@@ -9,6 +9,7 @@ import expressiveCode from 'astro-expressive-code';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://chenzhe142.github.io',
+	base: '/',
 	integrations: [expressiveCode(), mdx(), sitemap(),],
 	fonts: [
 		{

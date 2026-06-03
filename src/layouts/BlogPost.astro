@@ -10,7 +10,8 @@ type Props = CollectionEntry<"blog">["data"] & {
 	headings: { depth: number; slug: string; text: string }[];
 };
 
-const { title, description, pubDate, updatedDate, heroImage, headings } =
+// 🌟 核心：从 Astro.props 中把 tags 提取出来
+const { title, description, pubDate, updatedDate, heroImage, headings, tags } =
 	Astro.props;
 
 const tocHeadings = headings?.filter((h) => h.depth > 1 && h.depth < 4) || [];
@@ -22,7 +23,7 @@ const tocHeadings = headings?.filter((h) => h.depth > 1 && h.depth < 4) || [];
 		<style>
 			main {
 				width: 100%;
-				max-width: 1320px; /* 🌟 略微放宽整体容器，完美容纳：200px(左) + 64px(gap) + 820px(文) + 64px(gap) + 200px(右) */
+				max-width: 1320px;
 				margin: 0 auto;
 				padding: 0 2rem;
 			}
@@ -47,31 +48,30 @@ const tocHeadings = headings?.filter((h) => h.depth > 1 && h.depth < 4) || [];
 				height: auto;
 			}
 
-			/* 🌟 核心修正：利用 CSS Grid 强行让正文绝对居中 */
+			/* 利用 CSS Grid 强行让正文绝对居中 */
 			.article-layout {
 				display: grid;
-				/* 三轨布局：左侧对称空白(200px) | 中间文章(最大820px) | 右侧目录(200px) */
 				grid-template-columns: minmax(0, 200px) minmax(0, 820px) minmax(
 						0,
 						200px
 					);
 				gap: 4rem;
 				align-items: flex-start;
-				justify-content: center; /* 容器内网格居中 */
+				justify-content: center;
 				position: relative;
 				width: 100%;
 			}
 
 			.prose {
-				grid-column: 2; /* 🌟 强行塞入第 2 列（也就是绝对正中央） */
+				grid-column: 2;
 				width: 100%;
 				padding: 1em 0;
 				color: rgb(var(--gray-dark));
 			}
 
-			/* 🌟 仿少数派：极简无干扰侧边栏 */
+			/* 仿少数派：极简无干扰侧边栏 */
 			.sidebar-toc {
-				grid-column: 3; /* 🌟 明确指出定位在右侧第 3 列 */
+				grid-column: 3;
 				width: 200px;
 				position: sticky;
 				top: 6rem;
@@ -164,32 +164,57 @@ const tocHeadings = headings?.filter((h) => h.depth > 1 && h.depth < 4) || [];
 				font-style: italic;
 			}
 
-			/* 📱 响应式适配：大宽屏退到普通宽屏时，挤掉左边的虚拟空白轨道 */
+			/* 🌟 少数派风格：文章底部标签区域 */
+			.post-footer-tags {
+				margin-top: 4rem;
+				padding-top: 1.5rem;
+				border-top: 1px dashed rgba(var(--gray), 0.2); /* 虚线分隔正文，弱化视觉 */
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+			}
+
+			.tag-badge {
+				display: inline-block;
+				padding: 0.2rem 0.5rem;
+				background-color: rgb(var(--gray-light));
+				color: rgba(var(--gray-dark), 0.6);
+				border-radius: 4px;
+				font-size: 0.75rem;
+				font-weight: 500;
+				text-decoration: none;
+				transition: all 0.2s ease;
+			}
+
+			.tag-badge:hover {
+				background-color: var(--accent);
+				color: #fff;
+			}
+
+			/* 📱 响应式适配 */
 			@media (max-width: 1300px) {
 				.article-layout {
-					/* 取消左边无用的占位，变为：文章自适应 | 目录 200px */
 					grid-template-columns: minmax(0, 820px) minmax(0, 200px);
 					gap: 3rem;
 				}
 				.prose {
-					grid-column: 1; /* 正文归位到第 1 列 */
+					grid-column: 1;
 				}
 				.sidebar-toc {
-					grid-column: 2; /* 目录归位到第 2 列 */
+					grid-column: 2;
 				}
 			}
 
-			/* 进一步收窄时（如平板、手机），彻底干掉目录，文章 100% 独立居中 */
 			@media (max-width: 1024px) {
 				.article-layout {
-					display: block; /* 废除 Grid */
+					display: block;
 				}
 				.sidebar-toc {
-					display: none; /* 彻底隐藏 */
+					display: none;
 				}
 				.prose {
 					max-width: 760px;
-					margin: 0 auto; /* 靠 margin 居中 */
+					margin: 0 auto;
 				}
 			}
 			@media (max-width: 720px) {
@@ -234,7 +259,23 @@ const tocHeadings = headings?.filter((h) => h.depth > 1 && h.depth < 4) || [];
 							</div>
 							<hr />
 						</div>
+
 						<slot />
+
+						{
+							tags && tags.length > 0 && (
+								<div class="post-footer-tags">
+									{tags.map((tag: string) => (
+										<a
+											href={`/tags/${tag}/`}
+											class="tag-badge"
+										>
+											#{tag}
+										</a>
+									))}
+								</div>
+							)
+						}
 					</div>
 
 					{

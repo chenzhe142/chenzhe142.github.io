@@ -1,6 +1,6 @@
 ---
 title: '设计和编写front end component'
-description: 'Lorem ipsum dolor sit amet'
+description: ''
 pubDate: 'May 17 2017'
 tags: ["frontend", "css"]
 ---
