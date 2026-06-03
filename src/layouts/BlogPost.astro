@@ -1,14 +1,19 @@
 ---
-import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Header from "../components/Header.astro";
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<"blog">["data"] & {
+	headings: { depth: number; slug: string; text: string }[];
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, headings } =
+	Astro.props;
+
+const tocHeadings = headings?.filter((h) => h.depth > 1 && h.depth < 4) || [];
 ---
 
 <html lang="en">
@@ -16,31 +21,136 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<BaseHead title={title} description={description} />
 		<style>
 			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
+				width: 100%;
+				max-width: 1320px; /* 🌟 略微放宽整体容器，完美容纳：200px(左) + 64px(gap) + 820px(文) + 64px(gap) + 200px(右) */
+				margin: 0 auto;
+				padding: 0 2rem;
 			}
+			html {
+				scroll-behavior: smooth;
+			}
+			h2[id],
+			h3[id] {
+				scroll-margin-top: 6rem;
+			}
+
 			.hero-image {
 				width: 100%;
+				margin-bottom: 2rem;
 			}
 			.hero-image img {
 				display: block;
 				margin: 0 auto;
 				border-radius: 12px;
 				box-shadow: var(--box-shadow);
+				width: 100%;
+				height: auto;
 			}
+
+			/* 🌟 核心修正：利用 CSS Grid 强行让正文绝对居中 */
+			.article-layout {
+				display: grid;
+				/* 三轨布局：左侧对称空白(200px) | 中间文章(最大820px) | 右侧目录(200px) */
+				grid-template-columns: minmax(0, 200px) minmax(0, 820px) minmax(
+						0,
+						200px
+					);
+				gap: 4rem;
+				align-items: flex-start;
+				justify-content: center; /* 容器内网格居中 */
+				position: relative;
+				width: 100%;
+			}
+
 			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
+				grid-column: 2; /* 🌟 强行塞入第 2 列（也就是绝对正中央） */
+				width: 100%;
+				padding: 1em 0;
 				color: rgb(var(--gray-dark));
 			}
+
+			/* 🌟 仿少数派：极简无干扰侧边栏 */
+			.sidebar-toc {
+				grid-column: 3; /* 🌟 明确指出定位在右侧第 3 列 */
+				width: 200px;
+				position: sticky;
+				top: 6rem;
+				max-height: calc(100vh - 10rem);
+				overflow-y: auto;
+				padding: 0 0 0 1rem;
+				border-left: 1px solid rgba(var(--gray), 0.15);
+			}
+
+			.toc-title {
+				font-size: 0.7rem;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: rgba(var(--gray), 0.5);
+				margin: 0 0 1rem 0;
+				font-weight: 700;
+			}
+
+			.toc-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 0.75rem;
+			}
+
+			.toc-item {
+				position: relative;
+				line-height: 1.4;
+			}
+
+			.toc-item a {
+				display: block;
+				font-size: 0.78rem;
+				color: rgba(var(--gray-dark), 0.45);
+				text-decoration: none;
+				transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.toc-item a:hover {
+				color: rgb(var(--gray-dark));
+			}
+
+			.toc-item.active a {
+				color: var(--accent) !important;
+				font-weight: 600;
+			}
+
+			.toc-item.active::before {
+				content: "";
+				position: absolute;
+				left: calc(-1rem - 1px);
+				top: 3px;
+				bottom: 3px;
+				width: 2px;
+				background-color: var(--accent);
+				border-radius: 1px;
+			}
+
+			.depth-2 {
+				padding-left: 0;
+			}
+			.depth-3 {
+				padding-left: 0.75rem;
+			}
+			.depth-3 a {
+				font-size: 0.75rem;
+				color: rgba(var(--gray-dark), 0.35);
+			}
+
 			.title {
-				margin-bottom: 1em;
+				margin-bottom: 2em;
 				padding: 1em 0;
 				text-align: center;
-				line-height: 1;
+				line-height: 1.3;
 			}
 			.title h1 {
 				margin: 0 0 0.5em 0;
@@ -48,9 +158,44 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.date {
 				margin-bottom: 0.5em;
 				color: rgb(var(--gray));
+				font-size: 0.9em;
 			}
 			.last-updated-on {
 				font-style: italic;
+			}
+
+			/* 📱 响应式适配：大宽屏退到普通宽屏时，挤掉左边的虚拟空白轨道 */
+			@media (max-width: 1300px) {
+				.article-layout {
+					/* 取消左边无用的占位，变为：文章自适应 | 目录 200px */
+					grid-template-columns: minmax(0, 820px) minmax(0, 200px);
+					gap: 3rem;
+				}
+				.prose {
+					grid-column: 1; /* 正文归位到第 1 列 */
+				}
+				.sidebar-toc {
+					grid-column: 2; /* 目录归位到第 2 列 */
+				}
+			}
+
+			/* 进一步收窄时（如平板、手机），彻底干掉目录，文章 100% 独立居中 */
+			@media (max-width: 1024px) {
+				.article-layout {
+					display: block; /* 废除 Grid */
+				}
+				.sidebar-toc {
+					display: none; /* 彻底隐藏 */
+				}
+				.prose {
+					max-width: 760px;
+					margin: 0 auto; /* 靠 margin 居中 */
+				}
+			}
+			@media (max-width: 720px) {
+				main {
+					padding: 0 1rem;
+				}
 			}
 		</style>
 	</head>
@@ -60,27 +205,100 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<main>
 			<article>
 				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+					{
+						heroImage && (
+							<Image
+								width={1020}
+								height={510}
+								src={heroImage}
+								alt=""
+							/>
+						)
+					}
 				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
+
+				<div class="article-layout">
+					<div class="prose">
+						<div class="title">
+							<h1>{title}</h1>
+							<div class="date">
+								<FormattedDate date={pubDate} />
+								{
+									updatedDate && (
+										<div class="last-updated-on">
+											Last updated on{" "}
+											<FormattedDate date={updatedDate} />
+										</div>
+									)
+								}
+							</div>
+							<hr />
 						</div>
-						<h1>{title}</h1>
-						<hr />
+						<slot />
 					</div>
-					<slot />
+
+					{
+						tocHeadings.length > 0 && (
+							<aside class="sidebar-toc">
+								<h2 class="toc-title">ON THIS PAGE</h2>
+								<ul class="toc-list">
+									{tocHeadings.map((heading) => (
+										<li
+											class={`toc-item depth-${heading.depth}`}
+										>
+											<a href={`#${heading.slug}`}>
+												{heading.text}
+											</a>
+										</li>
+									))}
+								</ul>
+							</aside>
+						)
+					}
 				</div>
 			</article>
 		</main>
 		<Footer />
+
+		<script>
+			function initTOC() {
+				const tocItems = document.querySelectorAll(".toc-item");
+				const headings = document.querySelectorAll(
+					".prose h2[id], .prose h3[id]",
+				);
+				if (!tocItems.length || !headings.length) return;
+
+				const observerOptions = {
+					root: null,
+					rootMargin: "-100px 0px -70% 0px",
+					threshold: 0,
+				};
+
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							const id = entry.target.getAttribute("id");
+
+							tocItems.forEach((item) => {
+								const link = item.querySelector("a");
+								if (
+									link &&
+									link.getAttribute("href") === `#${id}`
+								) {
+									item.classList.add("active");
+								} else {
+									item.classList.remove("active");
+								}
+							});
+						}
+					});
+				}, observerOptions);
+
+				headings.forEach((heading) => observer.observe(heading));
+			}
+
+			initTOC();
+			document.addEventListener("astro:after-swap", initTOC);
+		</script>
 	</body>
 </html>

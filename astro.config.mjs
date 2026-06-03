@@ -4,10 +4,12 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 
+import expressiveCode from 'astro-expressive-code';
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://chenzhe142.github.io',
-	integrations: [mdx(), sitemap()],
+	integrations: [expressiveCode(), mdx(), sitemap(),],
 	fonts: [
 		{
 			provider: fontProviders.local(),
