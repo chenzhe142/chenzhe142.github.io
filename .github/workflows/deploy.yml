@@ -19,4 +19,3 @@ jobs:
 
       - name: Install, bundle, and test your project
         uses: withastro/action@v3
-        # 如果你用的是 pnpm 或 yarn，脚本会自动识别，不需要额外配置
