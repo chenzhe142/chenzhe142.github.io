@@ -1,0 +1,207 @@
+/*
+  The CSS in this style tag is based off of Bear Blog's default CSS.
+  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
+  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+ */
+
+:root {
+	--accent: #2337ff;
+	--accent-dark: #000d8a;
+	--black: 15, 18, 25;
+	--gray: 96, 115, 159;
+	--gray-light: 229, 233, 240;
+	--gray-dark: 34, 41, 57;
+	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+	--box-shadow:
+		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
+		0 16px 32px rgba(var(--gray), 33%);
+}
+
+body {
+	font-family: var(--font-atkinson);
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background: linear-gradient(var(--gray-gradient)) no-repeat;
+	background-size: 100% 600px;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	color: rgb(var(--gray-dark));
+	/* 🌟 调小正文字号，提高阅读精致感 */
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.75;
+}
+
+main {
+	width: 720px;
+	max-width: calc(100% - 2em);
+	margin: auto;
+	padding: 3em 1em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 1.5rem 0 0.5rem 0;
+	/* 稍微增加了上方间距，让排版更有呼吸感 */
+	color: rgb(var(--black));
+	line-height: 1.3;
+}
+
+/* 🌟 重新设计的紧凑型标题字阶 */
+h1 {
+	font-size: 2.25em;
+	/* 约 36px */
+}
+
+h2 {
+	font-size: 1.75em;
+	/* 约 28px（作为文章标题大小正合适） */
+}
+
+h3 {
+	font-size: 1.4em;
+	/* 约 22.4px */
+}
+
+h4 {
+	font-size: 1.2em;
+	/* 约 19.2px */
+}
+
+h5 {
+	font-size: 1em;
+	/* 与正文等大，靠加粗区分 */
+}
+
+strong,
+b {
+	font-weight: 700;
+}
+
+a {
+	color: var(--accent);
+}
+
+a:hover {
+	color: var(--accent);
+}
+
+p {
+	margin-bottom: 1.25em;
+}
+
+/* 🌟 调整了 prose 模式下的段落间距，避免因为字号变小显得间距过空 */
+.prose p {
+	margin-bottom: 1.5em;
+}
+
+textarea {
+	width: 100%;
+	font-size: 15px;
+}
+
+input {
+	font-size: 15px;
+}
+
+table {
+	width: 100%;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+
+/* 🌟 全局代码块样式微调 */
+
+code {
+	/* 行内代码：如 `npm run dev` */
+	padding: 2px 6px;
+	background-color: rgb(var(--gray-light));
+	border-radius: 4px;
+	font-family: monospace, monospace;
+	/* 双 monospace 可以修复部分浏览器字号缩放的 bug */
+	font-size: 0.85em;
+	/* 🌟 降到正文的 85%，视觉上和正文等大 */
+	word-break: break-word;
+}
+
+pre {
+	/* 多行代码块 */
+	padding: 1.2em;
+	/* 稍微收紧内边距 */
+	border-radius: 8px;
+	overflow-x: auto;
+	/* 确保长代码可以横向滚动，不撑破布局 */
+	background-color: rgb(var(--gray-light));
+	/* 如果你用了 Shiki 高亮，这行可以删掉，Shiki 会自带背景 */
+}
+
+pre>code {
+	all: unset;
+	/* 🌟 核心：调整多行代码块内部的字号与行高 */
+	font-family: monospace, monospace;
+	font-size: 0.88em;
+	/* 🌟 核心：调整代码块字号（约 14px） */
+	line-height: 1.6;
+	/* 🌟 稍微收紧行高，让代码看起来更紧凑、更有极客感 */
+}
+
+blockquote {
+	border-left: 4px solid var(--accent);
+	padding: 0 0 0 20px;
+	margin: 1.5em 0;
+	font-size: 1.1em;
+	/* 🌟 降低了引用块的夸张字号 */
+	font-style: italic;
+	color: rgb(var(--gray));
+}
+
+hr {
+	border: none;
+	border-top: 1px solid rgb(var(--gray-light));
+}
+
+@media (max-width: 720px) {
+	body {
+		font-size: 15px;
+		/* 🌟 移动端微调为 15px，保证小屏阅读体验 */
+	}
+
+	main {
+		padding: 1em;
+	}
+}
+
+.sr-only {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	clip: rect(1px 1px 1px 1px);
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* 🌟 1. 让全网所有滚动（包括点击锚点跳转）都变成丝滑动画 */
+html {
+	scroll-behavior: smooth;
+}
+
+/* 🌟 2. 核心避坑：防止点击大纲跳转后，标题被顶部的 Header 挡住 */
+h2[id],
+h3[id] {
+	scroll-margin-top: 5rem;
+	/* 这里的克数（5rem）可以根据你 Header 的实际高度来微调 */
+}

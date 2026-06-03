@@ -1,0 +1,154 @@
+---
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+
+// 1. 核心：告诉 Astro 这条动态路由需要生成哪些具体的标签页面
+export async function getStaticPaths() {
+    const allPosts = await getCollection("blog");
+
+    // 提取所有文章中出现过的 tags，并去重
+    const uniqueTags = [
+        ...new Set(allPosts.map((post) => post.data.tags || []).flat()),
+    ];
+
+    // 为每个 tag 返回一个对象，包含 params（路由参数）和 props（传递给页面的数据）
+    return uniqueTags.map((tag) => {
+        const filteredPosts = allPosts
+            .filter((post) => post.data.tags?.includes(tag))
+            .sort(
+                (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+            );
+
+        return {
+            params: { tag },
+            props: { posts: filteredPosts },
+        };
+    });
+}
+
+// 2. 从 Astro.params 和 Astro.props 中拿到当前路由的标签名和对应的文章列表
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead
+            title={`Posts tagged with #${tag} | ${SITE_TITLE}`}
+            description={SITE_DESCRIPTION}
+        />
+        <style>
+            main {
+                width: 100%;
+                max-width: 680px;
+                margin: 0 auto;
+                padding: 2rem 1rem;
+            }
+            .page-header {
+                margin-bottom: 2.5rem;
+                border-bottom: 2px solid rgb(var(--gray-light));
+                padding-bottom: 1rem;
+            }
+            .page-title {
+                margin: 0;
+                font-size: 1.8rem;
+                color: rgb(var(--black));
+            }
+            .page-title span {
+                color: var(--accent);
+            }
+            .feed-list {
+                display: flex;
+                flex-direction: column;
+                gap: 1.75rem;
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+            .feed-item {
+                border-bottom: 1px solid rgb(var(--gray-light));
+                padding-bottom: 1.75rem;
+            }
+            .feed-item:last-child {
+                border-bottom: none;
+            }
+            .feed-card {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .title-link {
+                text-decoration: none;
+                display: inline-block;
+            }
+            .title {
+                margin: 0 0 0.25rem 0;
+                color: rgb(var(--black));
+                font-size: 1.35rem;
+                line-height: 1.4;
+                transition: color 0.2s ease;
+            }
+            .description {
+                margin: 0 0 0.5rem 0;
+                color: rgb(var(--gray-dark));
+                font-size: 0.95rem;
+                line-height: 1.6;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .date {
+                margin: 0;
+                color: rgb(var(--gray));
+                font-size: 0.85rem;
+            }
+            .title-link:hover .title {
+                color: var(--accent);
+            }
+        </style>
+    </head>
+    <body>
+        <Header />
+        <main>
+            <header class="page-header">
+                <h1 class="page-title">Articles in <span>#{tag}</span></h1>
+            </header>
+
+            <section>
+                <ul class="feed-list">
+                    {
+                        posts.map((post) => (
+                            <li class="feed-item">
+                                <div class="feed-card">
+                                    <a
+                                        href={`/blog/${post.id}/`}
+                                        class="title-link"
+                                    >
+                                        <h2 class="title">{post.data.title}</h2>
+                                    </a>
+                                    {post.data.description && (
+                                        <p class="description">
+                                            {post.data.description}
+                                        </p>
+                                    )}
+                                    <p class="date">
+                                        <FormattedDate
+                                            date={post.data.pubDate}
+                                        />
+                                    </p>
+                                </div>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </section>
+        </main>
+        <Footer />
+    </body>
+</html>

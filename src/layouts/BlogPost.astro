@@ -1,0 +1,345 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Header from "../components/Header.astro";
+
+type Props = CollectionEntry<"blog">["data"] & {
+	headings: { depth: number; slug: string; text: string }[];
+};
+
+// 🌟 核心：从 Astro.props 中把 tags 提取出来
+const { title, description, pubDate, updatedDate, heroImage, headings, tags } =
+	Astro.props;
+
+const tocHeadings = headings?.filter((h) => h.depth > 1 && h.depth < 4) || [];
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: 100%;
+				max-width: 1320px;
+				margin: 0 auto;
+				padding: 0 2rem;
+			}
+			html {
+				scroll-behavior: smooth;
+			}
+			h2[id],
+			h3[id] {
+				scroll-margin-top: 6rem;
+			}
+
+			.hero-image {
+				width: 100%;
+				margin-bottom: 2rem;
+			}
+			.hero-image img {
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+				width: 100%;
+				height: auto;
+			}
+
+			/* 利用 CSS Grid 强行让正文绝对居中 */
+			.article-layout {
+				display: grid;
+				grid-template-columns: minmax(0, 200px) minmax(0, 820px) minmax(
+						0,
+						200px
+					);
+				gap: 4rem;
+				align-items: flex-start;
+				justify-content: center;
+				position: relative;
+				width: 100%;
+			}
+
+			.prose {
+				grid-column: 2;
+				width: 100%;
+				padding: 1em 0;
+				color: rgb(var(--gray-dark));
+			}
+
+			/* 仿少数派：极简无干扰侧边栏 */
+			.sidebar-toc {
+				grid-column: 3;
+				width: 200px;
+				position: sticky;
+				top: 6rem;
+				max-height: calc(100vh - 10rem);
+				overflow-y: auto;
+				padding: 0 0 0 1rem;
+				border-left: 1px solid rgba(var(--gray), 0.15);
+			}
+
+			.toc-title {
+				font-size: 0.7rem;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: rgba(var(--gray), 0.5);
+				margin: 0 0 1rem 0;
+				font-weight: 700;
+			}
+
+			.toc-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 0.75rem;
+			}
+
+			.toc-item {
+				position: relative;
+				line-height: 1.4;
+			}
+
+			.toc-item a {
+				display: block;
+				font-size: 0.78rem;
+				color: rgba(var(--gray-dark), 0.45);
+				text-decoration: none;
+				transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.toc-item a:hover {
+				color: rgb(var(--gray-dark));
+			}
+
+			.toc-item.active a {
+				color: var(--accent) !important;
+				font-weight: 600;
+			}
+
+			.toc-item.active::before {
+				content: "";
+				position: absolute;
+				left: calc(-1rem - 1px);
+				top: 3px;
+				bottom: 3px;
+				width: 2px;
+				background-color: var(--accent);
+				border-radius: 1px;
+			}
+
+			.depth-2 {
+				padding-left: 0;
+			}
+			.depth-3 {
+				padding-left: 0.75rem;
+			}
+			.depth-3 a {
+				font-size: 0.75rem;
+				color: rgba(var(--gray-dark), 0.35);
+			}
+
+			.title {
+				margin-bottom: 2em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1.3;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+				font-size: 0.9em;
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+
+			/* 🌟 少数派风格：文章底部标签区域 */
+			.post-footer-tags {
+				margin-top: 4rem;
+				padding-top: 1.5rem;
+				border-top: 1px dashed rgba(var(--gray), 0.2); /* 虚线分隔正文，弱化视觉 */
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+			}
+
+			.tag-badge {
+				display: inline-block;
+				padding: 0.2rem 0.5rem;
+				background-color: rgb(var(--gray-light));
+				color: rgba(var(--gray-dark), 0.6);
+				border-radius: 4px;
+				font-size: 0.75rem;
+				font-weight: 500;
+				text-decoration: none;
+				transition: all 0.2s ease;
+			}
+
+			.tag-badge:hover {
+				background-color: var(--accent);
+				color: #fff;
+			}
+
+			/* 📱 响应式适配 */
+			@media (max-width: 1300px) {
+				.article-layout {
+					grid-template-columns: minmax(0, 820px) minmax(0, 200px);
+					gap: 3rem;
+				}
+				.prose {
+					grid-column: 1;
+				}
+				.sidebar-toc {
+					grid-column: 2;
+				}
+			}
+
+			@media (max-width: 1024px) {
+				.article-layout {
+					display: block;
+				}
+				.sidebar-toc {
+					display: none;
+				}
+				.prose {
+					max-width: 760px;
+					margin: 0 auto;
+				}
+			}
+			@media (max-width: 720px) {
+				main {
+					padding: 0 1rem;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="hero-image">
+					{
+						heroImage && (
+							<Image
+								width={1020}
+								height={510}
+								src={heroImage}
+								alt=""
+							/>
+						)
+					}
+				</div>
+
+				<div class="article-layout">
+					<div class="prose">
+						<div class="title">
+							<h1>{title}</h1>
+							<div class="date">
+								<FormattedDate date={pubDate} />
+								{
+									updatedDate && (
+										<div class="last-updated-on">
+											Last updated on{" "}
+											<FormattedDate date={updatedDate} />
+										</div>
+									)
+								}
+							</div>
+							<hr />
+						</div>
+
+						<slot />
+
+						{
+							tags && tags.length > 0 && (
+								<div class="post-footer-tags">
+									{tags.map((tag: string) => (
+										<a
+											href={`/tags/${tag}/`}
+											class="tag-badge"
+										>
+											#{tag}
+										</a>
+									))}
+								</div>
+							)
+						}
+					</div>
+
+					{
+						tocHeadings.length > 0 && (
+							<aside class="sidebar-toc">
+								<h2 class="toc-title">ON THIS PAGE</h2>
+								<ul class="toc-list">
+									{tocHeadings.map((heading) => (
+										<li
+											class={`toc-item depth-${heading.depth}`}
+										>
+											<a href={`#${heading.slug}`}>
+												{heading.text}
+											</a>
+										</li>
+									))}
+								</ul>
+							</aside>
+						)
+					}
+				</div>
+			</article>
+		</main>
+		<Footer />
+
+		<script>
+			function initTOC() {
+				const tocItems = document.querySelectorAll(".toc-item");
+				const headings = document.querySelectorAll(
+					".prose h2[id], .prose h3[id]",
+				);
+				if (!tocItems.length || !headings.length) return;
+
+				const observerOptions = {
+					root: null,
+					rootMargin: "-100px 0px -70% 0px",
+					threshold: 0,
+				};
+
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							const id = entry.target.getAttribute("id");
+
+							tocItems.forEach((item) => {
+								const link = item.querySelector("a");
+								if (
+									link &&
+									link.getAttribute("href") === `#${id}`
+								) {
+									item.classList.add("active");
+								} else {
+									item.classList.remove("active");
+								}
+							});
+						}
+					});
+				}, observerOptions);
+
+				headings.forEach((heading) => observer.observe(heading));
+			}
+
+			initTOC();
+			document.addEventListener("astro:after-swap", initTOC);
+		</script>
+	</body>
+</html>

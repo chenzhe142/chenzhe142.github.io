@@ -1,0 +1,22 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ master ] # 🌟 如果你的默认分支叫 master，记得改成 master
+
+# 给这个脚本赋予修改 GitHub Pages 的权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository
+        uses: actions/checkout@v4
+
+      - name: Install, bundle, and test your project
+        uses: withastro/action@v3
+        # 如果你用的是 pnpm 或 yarn，脚本会自动识别，不需要额外配置
