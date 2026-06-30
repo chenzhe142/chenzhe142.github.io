@@ -56,11 +56,13 @@ Astro的CLI界面交互做得有点可爱，引导也做的很棒。吉祥物也
 
 参照少数派的博文布局，在调整完整体样式之后，我想对项目进行进一步的微调，并增加一些新功能：
 
-- 调整文章页的布局：三栏CSS Grid（200/820/200），正文强制居中，右侧sticky的table of content
-- 增加clickable table of content component：hover的时候highlight文字，点击链接时scroll to section
-- 增加tags component，用来分类博文
-- 在文章底部以及博文列表页显示文章的tag
+- 调整文章页的布局
+- 调整文章发布时间的位置
+- 增加tag组件，用来分类博文
+- 增加sticky table of content组件
 - 增加`/tags/[tag]` route
+
+以下是微调具体的实现。
 
 ### 界面调整
 

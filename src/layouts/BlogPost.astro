@@ -8,11 +8,21 @@ import Header from "../components/Header.astro";
 
 type Props = CollectionEntry<"blog">["data"] & {
 	headings: { depth: number; slug: string; text: string }[];
+	// 静态页面（如 About）可传 hideDate 来隐藏发布日期
+	hideDate?: boolean;
 };
 
 // 🌟 核心：从 Astro.props 中把 tags 提取出来
-const { title, description, pubDate, updatedDate, heroImage, headings, tags } =
-	Astro.props;
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage,
+	headings,
+	tags,
+	hideDate,
+} = Astro.props;
 
 const tocHeadings = headings?.filter((h) => h.depth > 1 && h.depth < 4) || [];
 ---
@@ -246,17 +256,21 @@ const tocHeadings = headings?.filter((h) => h.depth > 1 && h.depth < 4) || [];
 					<div class="prose">
 						<div class="title">
 							<h1>{title}</h1>
-							<div class="date">
-								<FormattedDate date={pubDate} />
-								{
-									updatedDate && (
-										<div class="last-updated-on">
-											Last updated on{" "}
-											<FormattedDate date={updatedDate} />
-										</div>
-									)
-								}
-							</div>
+							{
+								!hideDate && (
+									<div class="date">
+										<FormattedDate date={pubDate} />
+										{updatedDate && (
+											<div class="last-updated-on">
+												Last updated on{" "}
+												<FormattedDate
+													date={updatedDate}
+												/>
+											</div>
+										)}
+									</div>
+								)
+							}
 							<hr />
 						</div>
 
