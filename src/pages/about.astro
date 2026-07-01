@@ -1,24 +1,13 @@
 ---
 import Layout from "../layouts/BlogPost.astro";
+import Bio, { description } from "../components/Bio.astro";
 ---
 
 <Layout
 	title="About Me"
-	description="Zhe Chen — software engineer going deeper on ML and LLMs. Notes on what I'm learning in tech, plus cycling and coffee."
+	description={description}
 	pubDate={new Date("June 02 2026")}
 	hideDate={true}
 >
-	<p>
-		Started software engineering career in 2016. Worked across different
-		tech domains throughout my career - full-stack, backend, devops, and
-		data analysis. Currently going deeper on ML and LLMs to support my
-		day-to-day work on new-user cold-start and retention.
-	</p>
-
-	<p>
-		Here I share what I'm learning in tech, and occasionally write about
-		life.
-	</p>
-
-	<p>Outside of work: avid cyclist and coffee lover.</p>
+	<Bio />
 </Layout>
